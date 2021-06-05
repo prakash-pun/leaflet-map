@@ -223,12 +223,9 @@
          }
       }).addTo(map);
 
-
       var modal = document.getElementById("myModal");
-
       // Get the button that opens the modal
       var modalBtn = document.getElementById("myBtn");
-
       // Get the <span> element that closes the modal
       var span = document.getElementsByClassName("close")[0];
 
@@ -243,7 +240,6 @@
          });
       };
 
-
       $('#myModal').on('shown.bs.tab', function (e) {
             //call the clear map event first
             clearMap();
@@ -256,7 +252,6 @@
       span.onclick = function () {
          modal.style.visibility = "hidden";
       };
-
 
       map.whenReady(() => {
          console.log('Map ready');
