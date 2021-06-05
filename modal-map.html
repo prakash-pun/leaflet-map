@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+   <title>My Routing</title>
+
+   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+   <link rel="stylesheet" href="leaflet/leaflet.css" />
+   <script src="leaflet/leaflet.js"></script>
+
+   <!-- Load Esri Leaflet -->
+   <script src="https://unpkg.com/esri-leaflet@2.5.0/dist/esri-leaflet.js"
+      integrity="sha512-ucw7Grpc+iEQZa711gcjgMBnmd9qju1CICsRaryvX7HJklK0pGl/prxKvtHwpgm5ZHdvAil7YPxI1oWPOWK3UQ=="
+      crossorigin=""></script>
+
+   <!-- Load Esri Leaflet Geocoder -->
+   <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.3.3/dist/esri-leaflet-geocoder.css"
+      integrity="sha512-IM3Hs+feyi40yZhDH6kV8vQMg4Fh20s9OzInIIAc4nx7aMYMfo+IenRUekoYsHZqGkREUgx0VvlEsgm7nCDW9g=="
+      crossorigin="">
+
+   <script src="https://unpkg.com/esri-leaflet-geocoder@2.3.3/dist/esri-leaflet-geocoder.js"
+      integrity="sha512-HrFUyCEtIpxZloTgEKKMq4RFYhxjJkCiF5sDxuAokklOeZ68U2NPfh4MFtyIVWlsKtVbK5GD2/JzFyAfvT5ejA=="
+      crossorigin=""></script>
+
+   <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+   <link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.css" />
+   <link rel="stylesheet" href="leaflet-routing/leaflet-routing-machine.css" />
+   <link rel="stylesheet" href="geocode/L.Control.Locate.min.css">
+   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
+   <style>
+      @import url(https://fonts.googleapis.com/css?family=Open+Sans);
+      * {
+         margin: 0;
+         text-decoration: none;
+      }
+
+      .button {
+         width: 150px;
+         height: 50px;
+         border-radius: 100px;
+         background-color: rgb(34, 215, 126);
+         cursor: pointer;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         color: #fff;
+         font-size: 15px;
+         box-shadow: 4px 4px 15px 0px rgba(34, 215, 126, 0.66);
+         text-transform: uppercase;
+         font-weight: 800;
+      }
+
+      html {
+         font-family: sans-serif;
+         font-size: 15px;
+      }
+
+      .map {
+         /* position: fixed; */
+         height: 200px;
+         width: 100%;
+         top: 0;
+         left: 0;
+         right: 0;
+         bottom: 0;
+      }
+
+      .results {
+         background-color: black;
+         opacity: 0.8;
+         position: absolute;
+         top: 12px;
+         right: 12px;
+         width: 320px;
+         height: 480px;
+         overflow-y: scroll;
+      }
+
+      .leaflet-routing-alternatives-container {
+         display: none;
+      }
+
+      .leaflet-routing-container .leaflet-bar .leaflet-control {
+         display: none;
+      }
+
+      .leaflet-top .leflet-right {
+         display: none !important;
+      }
+
+      .button-class {
+         background-color: rgb(44, 44, 122);
+         color: white;
+         font-size: 20px;
+         align-items: center;
+         justify-content: center;
+         margin-top: 20px;
+         padding: 3px;
+      }
+
+      .map-modal {
+         /* display: none; */
+         visibility: hidden;
+         position: fixed;
+         /* z-index: 3000; */
+         padding-top: 40px;
+         left: 0;
+         top: 0;
+         width: 100%;
+         height: 100%;
+         overflow: auto;
+         background-color: rgb(0, 0, 0);
+         background-color: rgba(0, 0, 0, 0.4);
+      }
+
+      .map-modal[aria-hidden='false'] {
+         visibility: visible;
+         display: block;
+      }
+
+      /* Modal Content */
+      .map-content {
+         background-color: #fefefe;
+         margin: auto;
+         padding: 10px 20px 20px 20px;
+         border: 1px solid #888;
+         width: 40%;
+         border-radius: 5px;
+      }   
+      #myBtn{
+         padding: 10px;
+         background-color: rgb(52, 61, 182);
+         border: none;
+         border-radius: 5px;
+         margin: 2%;
+         color: white;
+         font-size: 1.1rem;
+      }   
+      .close{
+         float: right;
+         font-size: 2.5rem;
+         cursor: pointer;
+         font-weight: bold;
+      }
+   </style>
+</head>
+
+<body>
+
+<button id="myBtn" class="map-view">View on Map</button>
+   <div id="myModal" class="map-modal">
+      <!-- Modal content -->
+      <div class="map-content">
+         <span class="close">&times;</span><br>
+         <div class="map" id="map" style='height:360px;'></div>
+      </div>
+   </div>
+
+   <script src="leaflet-routing/leaflet-routing-machine.js"></script>
+   <script src="geocode/L.Control.Locate.min.js"></script>
+   <script src="geocode/Control.Geocoder.js"></script>
+   <script src="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.umd.js"></script>
+   <script>
+
+      var map = L.map('map');
+
+      L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
+
+      var greenIcon = new L.Icon({
+         iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+         shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.4/images/marker-shadow.png',
+         iconSize: [25, 41],
+         iconAnchor: [12, 41],
+         popupAnchor: [1, -34],
+         shadowSize: [41, 41]
+      });
+      
+      var redIcon = new L.Icon({
+         iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+         shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.4/images/marker-shadow.png',
+         iconSize: [25, 41],
+         iconAnchor: [12, 41],
+         popupAnchor: [1, -34],
+         shadowSize: [41, 41]
+      });
+      
+      var blueIcon = new L.Icon({
+         iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
+         shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.4/images/marker-shadow.png',
+         iconSize: [25, 41],
+         iconAnchor: [12, 41],
+         popupAnchor: [1, -34],
+         shadowSize: [41, 41]
+      });
+
+      L.Routing.control({
+         waypoints: [
+            L.latLng(28.213248, 83.9876608),
+            L.latLng(28.2330251, 83.9820393),
+         ],
+         createMarker: function (waypointIndex, waypoint, numberOfWaypoints) {
+            if (waypointIndex === 0) {
+               return L.marker(waypoint.latLng, {
+                  //draggable: true,
+                  icon: greenIcon
+               }).bindPopup("Start");
+            } else if (waypointIndex === numberOfWaypoints - 1){
+               return L.marker(waypoint.latLng, {
+                  icon: redIcon
+               }).bindPopup("End");
+            } else{
+               return L.marker(waypoint.latLng, {
+                  icon: blueIcon
+               });
+            }
+         }
+      }).addTo(map);
+
+
+      var modal = document.getElementById("myModal");
+
+      // Get the button that opens the modal
+      var modalBtn = document.getElementById("myBtn");
+
+      // Get the <span> element that closes the modal
+      var span = document.getElementsByClassName("close")[0];
+
+      // When the user clicks the button, open the modal
+      modalBtn.onclick = function () {
+         modal.style.visibility = "visible";
+         console.log("ram");
+         $('#myModal').on('shown.bs.modal', function () {
+            setTimeout(function () {
+               map.invalidateSize();
+            }, 10);
+         });
+      };
+
+
+      $('#myModal').on('shown.bs.tab', function (e) {
+            //call the clear map event first
+            clearMap();
+            //resize the map - this is the important part for you
+            map.invalidateSize(true);
+            //load the map once all layers cleared
+            loadMap();
+         })
+      // When the user clicks on <span> (x), close the modal
+      span.onclick = function () {
+         modal.style.visibility = "hidden";
+      };
+
+
+      map.whenReady(() => {
+         console.log('Map ready');
+         setTimeout(() => {
+         map.invalidateSize();
+         }, 0);
+      });
+   </script>
+</body>
+</html>

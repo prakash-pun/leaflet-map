@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <meta charset="utf-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+   <title>My Routing</title>
+
+   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+   <link rel="stylesheet" href="leaflet/leaflet.css" />
+   <script src="leaflet/leaflet.js"></script>
+
+   <!-- Load Esri Leaflet -->
+   <script src="https://unpkg.com/esri-leaflet@2.5.0/dist/esri-leaflet.js" integrity="sha512-ucw7Grpc+iEQZa711gcjgMBnmd9qju1CICsRaryvX7HJklK0pGl/prxKvtHwpgm5ZHdvAil7YPxI1oWPOWK3UQ==" crossorigin=""></script>
+
+   <!-- Load Esri Leaflet Geocoder -->
+   <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.3.3/dist/esri-leaflet-geocoder.css" integrity="sha512-IM3Hs+feyi40yZhDH6kV8vQMg4Fh20s9OzInIIAc4nx7aMYMfo+IenRUekoYsHZqGkREUgx0VvlEsgm7nCDW9g==" crossorigin="">
+
+   <script src="https://unpkg.com/esri-leaflet-geocoder@2.3.3/dist/esri-leaflet-geocoder.js" integrity="sha512-HrFUyCEtIpxZloTgEKKMq4RFYhxjJkCiF5sDxuAokklOeZ68U2NPfh4MFtyIVWlsKtVbK5GD2/JzFyAfvT5ejA==" crossorigin=""></script>
+
+   <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+   <link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.css" />
+   <link rel="stylesheet" href="leaflet-routing/leaflet-routing-machine.css" />
+   <link rel="stylesheet" href="geocode/L.Control.Locate.min.css">
+
+   <style>
+      @import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+      *{
+         margin: 0;
+         text-decoration: none;
+      }
+
+      .button{
+         width: 150px;
+         height: 50px;
+         border-radius: 100px;
+         background-color: rgb(34, 215, 126);
+         cursor: pointer;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         color: #fff;
+         font-size: 15px;
+         box-shadow: 4px 4px 15px 0px rgba(34, 215, 126, 0.66);
+         text-transform: uppercase;
+         font-weight: 800;
+      }
+
+      html {
+         font-family: sans-serif;
+         font-size: 15pt;
+      }
+      
+      .map {
+         /* position: fixed; */
+         height: 500px;
+         width: 100%;
+         top: 0;
+         left: 0;
+         right: 0;
+         bottom: 0;
+      }
+
+      .results {
+         background-color:black;
+         opacity: 0.8;
+         position: absolute;
+         top: 12px;
+         right: 12px;
+         width: 320px;
+         height: 480px;
+         overflow-y: scroll;
+      }
+      
+      .leaflet-routing-alternatives-container{
+         display: none;
+      }
+
+      .leaflet-routing-container .leaflet-bar .leaflet-control{
+         display: none;
+      }
+      .leaflet-top .leflet-right{
+         display: none !important;
+      }
+
+      .button-class{
+         background-color: rgb(44, 44, 122);
+         color: white;
+         font-size: 20px;
+         align-items: center;
+         justify-content: center;
+         margin-top: 20px;
+         padding: 3px;
+      }
+   </style>
+</head>
+
+<body>
+   <div class="map" id="map"></div>
+   
+   Distance: <input type="text" id="distance"><br>
+   Start: <input type="text" id="start"><br>
+   End: <input type="text" id="end"><br>
+   Start Latlng: <input type="text" id="startLatlng"><br>
+   End Latlng: <input type="text" id="endLatlng">
+
+   <script src="leaflet-routing/leaflet-routing-machine.js"></script>
+   <script src="geocode/L.Control.Locate.min.js"></script>
+   <script src="geocode/Control.Geocoder.js"></script>
+   <script src="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.umd.js"></script>
+   <script src="script.js"></script>
+</body>
+
+</html>
