@@ -1,6 +1,8 @@
 # leaflet-map
-leaflet map library
-
+## leaflet map library
+- Routing 
+- Geo location
+ 
 - leaflet routing
 ![image](https://user-images.githubusercontent.com/62987311/120896658-3e485100-c642-11eb-882a-f806e77e629f.png)
 
