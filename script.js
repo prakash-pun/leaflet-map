@@ -186,19 +186,19 @@ control.on("routesfound", function (e) {
 
    var distance = document.getElementById("distance");
    var total = routeDistance;
-   distance.value = total;
+   distance.innerHTML = total;
 
    var startLoc = document.getElementById("start");
    var loc = start;
-   startLoc.value = loc;
+   startLoc.innerHTML = loc;
 
    var startPoint = document.getElementById("startLatlng");
    var startLatLng = starting;
-   startPoint.value = startLatLng;
+   startPoint.innerHTML = startLatLng;
 
    var endPoint = document.getElementById("endLatlng");
    var endLatLng = destination;
-   endPoint.value = endLatLng;
+   endPoint.innerHTML = endLatLng;
 
 }).addTo(map);
 
